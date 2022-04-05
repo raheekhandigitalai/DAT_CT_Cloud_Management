@@ -130,3 +130,28 @@ def add_device_tag(device_id, tag_value):
             'response output: %s' % response.text)
 
     return response
+
+
+def get_installed_certificates_from_device(device_id):
+    # GET /api/v1/devices/{id}/cacerts
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer %s' % access_key
+    }
+
+    response = requests.request('GET',
+                                end_url() + '/%s/cacerts' % device_id,
+                                headers=headers,
+                                verify=False)
+
+    if response.status_code == 200:
+        logger(
+            'Python Script (function: get_installed_certificates_from_device) - '
+            'Successfully retrieved all available Certificates from device, response output: %s' % response.text)
+    else:
+        logger(
+            'Python Script (function: get_installed_certificates_from_device) - '
+            'Unable to get Certificates from device, response output: %s' % response.text)
+
+    return response

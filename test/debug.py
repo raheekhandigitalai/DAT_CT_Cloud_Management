@@ -46,15 +46,47 @@ def main():
     # users.get_users_from_project_and_delete(project_id)
 
 
-def prepocfullflow(name):
-    print('hello')
-    # deviceGroupId = device_groups.create_device_group(name)
-    # projectId = projects.createProject(name, deviceGroupId)
-    # projects.setMaxConcurrentBrowser(projectId)
-    # applications.assignExperiBankApplicationToProject('https://demoapplications.s3.amazonaws.com/com.experitest.ExperiBank_.LoginActivity_ver_2527.apk', projectId)
-    # applications.assignExperiBankApplicationToProject('https://demoapplications.s3.amazonaws.com/com.experitest.ExperiBank_ver_4077.ipa', projectId)
-    # users.createUsersReadingCSVFile(projectId)
+def set_up_environment(project_name):
+    device_id = 1937530
+
+    device_group_id = device_groups.create_device_group(project_name)
+    project_id = projects.create_project(project_name, device_group_id)
+    projects.set_notes(project_id, 'Created by Rahee')
+
+    apk = 'https://demoapplications.s3.amazonaws.com/com.experitest.ExperiBank_.LoginActivity_ver_2527.apk'
+    ipa = 'https://demoapplications.s3.amazonaws.com/com.experitest.ExperiBank_ver_4077.ipa'
+
+    applications.upload_application_to_project(apk, project_id)
+    applications.upload_application_to_project(ipa, project_id)
+
+    device_groups.assign_devices_to_device_group(device_id, device_group_id)
+
+    users.create_user('raheetest', 'firstname', 'lastname', 'raheetest@gmail.com', project_id, 'User')
+
+
+def tear_down_environment(project_name):
+    # device_group_id = 3488932
+    # project_id = 3488933
+    device_id = 1937530
+
+    device_group_id = device_groups.get_device_group_id(project_name)
+    device_group_id = str(device_group_id)
+    project_id = projects.get_project_id(project_name)
+
+    device_groups.remove_devices_from_device_group(device_id, device_group_id)
+    users.get_users_from_project_and_delete(project_id)
+    device_groups.delete_device_group(device_group_id)
+    projects.delete_project(project_id)
+
+
+def test():
+    device_groups.get_device_group_id('')
 
 
 if __name__ == "__main__":
-    main()
+    # test()
+    # print(devices.get_installed_certificates_from_device(1937530))
+    # set_up_environment('raheetest')
+    # tear_down_environment('raheetest')
+    project_id = projects.get_project_id('')
+    print(project_id)

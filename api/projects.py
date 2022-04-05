@@ -71,22 +71,6 @@ def delete_project(project_id):
     return response
 
 
-def get_project_id(project_name):
-    endPoint = "/projects"
-    endUrl = common.baseUrl + endPoint
-
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic %s' % base_auth
-    }
-
-    response = requests.request("GET", endUrl, headers=headers, verify=False)
-    # logger(response.text)
-    id = find_project_id(project_name, response.content)
-    logger(id)
-    return id
-
-
 def set_max_concurrent_browser(project_id):
 
     headers = {
@@ -142,8 +126,25 @@ def set_notes(project_id, notes):
     logger(response.text)
 
 
+def get_project_id(project_name):
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic %s' % base_auth
+    }
+
+    response = requests.request("GET",
+                                end_url(),
+                                headers=headers,
+                                verify=False)
+
+    project_id = find_project_id(project_name, response.content)
+    return project_id
+
+
 def find_project_id(value, response_content):
     data = json.loads(response_content)
+    id = 0
 
     for key in data:
         if key == "data":
@@ -151,8 +152,14 @@ def find_project_id(value, response_content):
                 project_id = subKey['id']
                 project_name = subKey['name']
                 # logger(project_name)
-                if project_name == value:
-                    return project_id
+                if value in project_name:
+                    logger('project found')
+                    id = project_id
+                    break
+                else:
+                    logger('project not found')
+
+    return id
 
 # def clean_up_devices():
 #

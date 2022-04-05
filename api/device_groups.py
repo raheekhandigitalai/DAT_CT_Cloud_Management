@@ -132,33 +132,25 @@ def get_device_group_id(device_group_name):
                                 headers=headers,
                                 verify=False)
 
-    logger(find_device_group(device_group_name, response.content))
-    # id = find_device_group(device_group_name, response.content)
-    # logger(id)
-    # return id
+    device_group_id = find_device_group(device_group_name, response.content)
+    return device_group_id
 
 
 def find_device_group(value, response_content):
     data = json.loads(response_content)
+    device_group_id = 0
 
     for key in data:
         if key == "data":
             for subKey in data['data']:
-                logger(subKey)
-                # split_lines = subKey[1].split(", ")
-                # print(split_lines)
-                # split_lines = subKey.split(", ")
+                # logger(subKey)
+                logger(data['data'][subKey])
+                if value in data['data'][subKey]:
+                    device_group_id = subKey
+                    logger('found device group')
+                    break
+                else:
+                    logger('not found')
 
-                # split_data = data['data']
-                # test = split_data.split(", ")[0]
-                # logger(test)
-                # for x in range(len(subKey)):
-                #     logger(data['data'])
-                # for x in range(len(data['data'])):
-                #     logger(subKey)
+    return device_group_id
 
-                # deviceGroupId = subKey['id']
-                # deviceGroupName = subKey['name']
-                # # logger(projectName)
-                # if deviceGroupName == value:
-                #     return deviceGroupId
