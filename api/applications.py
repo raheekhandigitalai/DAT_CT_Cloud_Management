@@ -2,10 +2,9 @@ import requests
 import json
 from helper import common
 from helper import helpers
-from helper.helpers import logger
-
 
 base_auth = helpers.base_authentication()
+access_key = helpers.get_access_key()
 cloud_url = helpers.get_cloud_url()
 base_end_point = helpers.get_base_endpoint()
 applications_end_point = helpers.get_applications_endpoint()
@@ -26,7 +25,7 @@ def get_applications():
                                 end_url(),
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -48,5 +47,5 @@ def upload_application_to_project(url, project_id):
                                 files=files, 
                                 headers=headers, 
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response

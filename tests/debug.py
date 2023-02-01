@@ -1,14 +1,12 @@
-import requests
-import json
-import base64
-import csv
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+
 from api import device_groups
 from api import projects
 from api import applications
 from api import devices
 from api import users
-from api import reporter
-from helper import common
 
 
 def main():
@@ -41,13 +39,13 @@ def main():
     # print(user_id)
     # users.delete_user(3488897)
     # users.get_users()
-    project_id = 3484499
+    # project_id = 3484499
     # user_id = users.create_user('opportunity2', 'opportunity', 'opportunity', 'opportunity@unlock.ai', project_id, 'User')
     # users.get_users_from_project_and_delete(project_id)
 
 
 def set_up_environment(project_name):
-    device_id = 1937530
+    device_id = 4840738
 
     device_group_id = device_groups.create_device_group(project_name)
     project_id = projects.create_project(project_name, device_group_id)
@@ -67,7 +65,7 @@ def set_up_environment(project_name):
 def tear_down_environment(project_name):
     # device_group_id = 3488932
     # project_id = 3488933
-    device_id = 1937530
+    device_id = 4840738
 
     device_group_id = device_groups.get_device_group_id(project_name)
     device_group_id = str(device_group_id)
@@ -79,14 +77,7 @@ def tear_down_environment(project_name):
     projects.delete_project(project_id)
 
 
-def test():
-    device_groups.get_device_group_id('')
-
-
 if __name__ == "__main__":
-    # test()
-    # print(devices.get_installed_certificates_from_device(1937530))
+    print('debug')
     # set_up_environment('raheetest')
     # tear_down_environment('raheetest')
-    project_id = projects.get_project_id('')
-    print(project_id)

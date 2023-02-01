@@ -2,9 +2,10 @@ import requests
 import json
 from helper import common
 from helper import helpers
-from helper.helpers import logger
+
 
 base_auth = helpers.base_authentication()
+access_key = helpers.get_access_key()
 cloud_url = helpers.get_cloud_url()
 base_end_point = helpers.get_base_endpoint()
 device_groups_end_point = helpers.get_device_groups_endpoint()
@@ -25,7 +26,7 @@ def get_device_groups():
                                 end_url(),
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -45,10 +46,10 @@ def create_device_group(device_group_name):
                                 files=files, 
                                 headers=headers, 
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
 
     device_group_id = common.get_id(response.content)
-    logger(device_group_id)
+    helpers.logger(device_group_id)
     return device_group_id
 
 
@@ -67,7 +68,7 @@ def remove_devices_from_device_group(device_id_list, device_group_id):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -86,7 +87,7 @@ def assign_devices_to_device_group(device_id_list, device_group_id):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -101,7 +102,7 @@ def delete_device_group(device_group_id):
                                 end_url() + "/%s/" % device_group_id,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -116,7 +117,7 @@ def get_devices_in_device_group(device_group_id):
                                 end_url() + "/%s/devices" % device_group_id,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -136,21 +137,30 @@ def get_device_group_id(device_group_name):
     return device_group_id
 
 
-def find_device_group(value, response_content):
+# ChatGPT Provided
+def find_device_group(device_group_name, response_content):
     data = json.loads(response_content)
-    device_group_id = 0
+    device_groups = data["data"]
+    for group_id, group_name in device_groups.items():
+        if group_name == device_group_name:
+            return group_id
+    return None
 
-    for key in data:
-        if key == "data":
-            for subKey in data['data']:
-                # logger(subKey)
-                logger(data['data'][subKey])
-                if value in data['data'][subKey]:
-                    device_group_id = subKey
-                    logger('found device group')
-                    break
-                else:
-                    logger('not found')
-
-    return device_group_id
+# def find_device_group(value, response_content):
+#     data = json.loads(response_content)
+#     device_group_id = 0
+#
+#     for key in data:
+#         if key == "data":
+#             for subKey in data['data']:
+#                 # helpers.logger(subKey)
+#                 helpers.logger(data['data'][subKey])
+#                 if value in data['data'][subKey]:
+#                     device_group_id = subKey
+#                     helpers.logger('found device group')
+#                     break
+#                 else:
+#                     helpers.logger('not found')
+#
+#     return device_group_id
 

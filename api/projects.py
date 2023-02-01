@@ -2,9 +2,9 @@ import requests
 import json
 from helper import common
 from helper import helpers
-from helper.helpers import logger
 
 base_auth = helpers.base_authentication()
+access_key = helpers.get_access_key()
 cloud_url = helpers.get_cloud_url()
 base_end_point = helpers.get_base_endpoint()
 projects_end_point = helpers.get_projects_endpoint()
@@ -26,9 +26,9 @@ def get_projects():
                                 headers=headers,
                                 verify=False)
 
-    # id = find_project_id('opportunity', response.content)
-    # logger(id)
-    logger(response.text)
+    id = find_project_id('opportunity', response.content)
+    helpers.logger(id)
+    helpers.logger(response.text)
     return response
 
 
@@ -48,10 +48,10 @@ def create_project(name, device_group_id):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
 
     project_id = common.get_id(response.content)
-    logger(project_id)
+    helpers.logger(project_id)
     return project_id
 
 
@@ -67,7 +67,7 @@ def delete_project(project_id):
                                 headers=headers,
                                 verify=False)
 
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -86,7 +86,7 @@ def set_max_concurrent_browser(project_id):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
 
 
 def set_web_cleanup_status(project_id, enable):
@@ -105,7 +105,7 @@ def set_web_cleanup_status(project_id, enable):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
 
 
 def set_notes(project_id, notes):
@@ -123,7 +123,7 @@ def set_notes(project_id, notes):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
 
 
 def get_project_id(project_name):
@@ -142,24 +142,31 @@ def get_project_id(project_name):
     return project_id
 
 
+# ChatGPT Provided
 def find_project_id(value, response_content):
     data = json.loads(response_content)
-    id = 0
+    project = next((project for project in data["data"] if value in project["name"]), None)
+    return project["id"] if project else None
 
-    for key in data:
-        if key == "data":
-            for subKey in data['data']:
-                project_id = subKey['id']
-                project_name = subKey['name']
-                # logger(project_name)
-                if value in project_name:
-                    logger('project found')
-                    id = project_id
-                    break
-                else:
-                    logger('project not found')
 
-    return id
+# def find_project_id(value, response_content):
+#     data = json.loads(response_content)
+#     id = 0
+#
+#     for key in data:
+#         if key == "data":
+#             for subKey in data['data']:
+#                 project_id = subKey['id']
+#                 project_name = subKey['name']
+#                 # helpers.logger(project_name)
+#                 if value in project_name:
+#                     helpers.logger('project found')
+#                     id = project_id
+#                     break
+#                 else:
+#                     helpers.logger('project not found')
+#
+#     return id
 
 # def clean_up_devices():
 #

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="493b2555-8b95-44e3-a844-8f49ebcf1d87" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/SeeTestCloud_POV_Management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SeeTestCloud_POV_Management.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/applications.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/device_groups.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/devices.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/projects.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/reporter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/users.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/common.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/users.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/debug.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/testing.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2IejpfRMk4ozfjWCi0P8pUx4rrf" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/raheekhan/PycharmProjects/DAI_CT_Cloud_Management/tests"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/test" />
+      <recent name="$PROJECT_DIR$/api" />
+      <recent name="$PROJECT_DIR$/resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="493b2555-8b95-44e3-a844-8f49ebcf1d87" name="Changes" comment="" />
+      <created>1670549127807</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670549127807</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

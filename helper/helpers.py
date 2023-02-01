@@ -1,7 +1,11 @@
+import os
 import configparser
 
 config = configparser.ConfigParser()
-config.read('/Users/RKhan/PycharmProjects/SeeTestCloud_POV_Management/config.properties')
+
+config_file = os.path.join(os.getcwd(), 'resources', 'config.properties')
+# print(f'config file path: {config_file}')
+config.read(config_file)
 
 
 # Ability to create a new .txt file which can be populated by a list of 'items'

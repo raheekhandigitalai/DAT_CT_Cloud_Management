@@ -3,7 +3,6 @@ import json
 import csv
 from helper import common
 from helper import helpers
-from helper.helpers import logger
 
 base_auth = helpers.base_authentication()
 access_key = helpers.get_access_key()
@@ -28,7 +27,7 @@ def get_users():
                                 end_url(),
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -51,7 +50,7 @@ def create_user(username, first_name, last_name, email, project_id, role):
                                 files=files,
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     user_id = common.get_id(response.content)
     return user_id
 
@@ -67,7 +66,7 @@ def delete_user(user_id):
                                 end_url() + '/%s/delete' % str(user_id),
                                 headers=headers,
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     return response
 
 
@@ -85,27 +84,37 @@ def get_users_from_project_and_delete(project_id):
                                 cloud_url + base_end_point + projects_end_point + '/%s/users' % project_id,
                                 headers=headers, 
                                 verify=False)
-    logger(response.text)
+    helpers.logger(response.text)
     get_users_id_and_delete(response.content)
 
 
+# ChatGPT Provided
 def get_users_id_and_delete(response_content):
-    data = json.loads(response_content)
+    # users = json.loads(response_content)
+    users = json.loads(response_content)["data"]
 
-    for key in data:
-        if key == "data":
-            for subKey in data['data']:
-                delete_user(subKey['id'])
+    for user in users:
+        if "digital.ai" not in user['username']:
+            delete_user(user['id'])
+        else:
+            print(f"Skipping delete for user {user['username']}")
 
-                # logger(subKey['id'])
+# def get_users_id_and_delete(response_content):
+#     data = json.loads(response_content)
+#
+#     for key in data:
+#         if key == "data":
+#             for subKey in data['data']:
+#                 delete_user(subKey['id'])
+                # helpers.logger(subKey['id'])
                 # if 'digital.ai' in subKey['username']:
                 # if subKey['username'].find('digital.ai'):
-                #     logger(
+                #     helpers.logger(
                 #         'Python Script (function: get_users_id_and_delete) - '
                 #         'Not deleting User as User is part of Digital.ai.')
                 # else:
                 #     delete_user(subKey[id])
-                #     logger(
+                #     helpers.logger(
                 #         'Python Script (function: get_users_id_and_delete) - Deleting User.')
 
 
@@ -116,7 +125,7 @@ def user_exists(value, response_content):
         if key == "data":
             for subKey in data['data']:
                 new_data = subKey['userName']
-                # logger(newData)
+                # helpers.logger(newData)
                 if new_data == value:
                     return True
 
@@ -128,24 +137,34 @@ def check_if_user_exists(username, response_content):
         username_list = []
         username = item['userName']
         username_list.append(username)
-        logger(username)
+        helpers.logger(username)
         if username == "rahee":
-            logger("username exists")
+            helpers.logger("username exists")
             break
     return username
 
 
+# ChatGPT Provided
 def create_users_reading_csv_file(project_id, path_to_csv_file):
-    with open(path_to_csv_file, newline='') as f:
-        reader = csv.reader(f)
-        data = [tuple(row) for row in reader]
+    with open(path_to_csv_file, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)  # Skip the header row
+        for row in csv_reader:
+            username, first_name, last_name, email, role = row
+            create_user(username, first_name, last_name, email, project_id, role)
 
-        logger(data)
 
-        for each in data:
-            create_user(each[0],
-                        each[1],
-                        each[2],
-                        each[3],
-                        project_id,
-                        each[4])
+# def create_users_reading_csv_file(project_id, path_to_csv_file):
+#     with open(path_to_csv_file, newline='') as f:
+#         reader = csv.reader(f)
+#         data = [tuple(row) for row in reader]
+#
+#         helpers.logger(data)
+#
+#         for each in data:
+#             create_user(each[0],
+#                         each[1],
+#                         each[2],
+#                         each[3],
+#                         project_id,
+#                         each[4])
